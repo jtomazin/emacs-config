@@ -1,0 +1,11 @@
+.lsp-session-v1
+auto-save-list/
+eln-cache/
+elpa/
+history
+init.el~
+projectile-bookmarks.eld
+projects.eld
+recentf
+semanticdb/
+transient/
