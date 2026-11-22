@@ -70,34 +70,6 @@
   (markdown-command "pandoc -f gfm -t html5")
   (markdown-fontify-code-blocks-natively t))
 
-;; (eval-when-compile
-;;   (require 'use-package))
-
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(custom-safe-themes
-;;    '("0009d1723a4b328571cac33b80695a606142f8fd675cc7cad9fb2857505bfbbb" "4c56af497ddf0e30f65a7232a8ee21b3d62a8c332c6b268c81e9ea99b11da0d3" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" default))
-;;  '(ivy-sort-matches-functions-alist
-;;    '((t)
-;;      (counsel-M-x . ivy--shorter-matches-first)
-;;      (counsel-find-file lambda
-;;                         (name candidates)
-;;                         (ivy--prefix-sort name
-;;                                           (ivy--shorter-matches-first name candidates)))
-;;      (ivy-completion-in-region . ivy--shorter-matches-first)
-;;      (ivy-switch-buffer . ivy-sort-function-buffer)))
-;;  '(js-indent-level 2)
-;;  '(js-indent-switch-body t)
-;;  '(js2-strict-missing-semi-warning nil)
-;;  '(mac-option-modifier '(:ordinary super :function alt :mouse alt))
-;;  '(org-adapt-indentation t)
-;;  '(package-selected-packages
-;;    '(yaml-mode geiser-chez vue-mode csound-mode python lsp-ui rustic lsp-mode geiser-mode async geiser-mit tide ag counsel-projectile projectile js2-mode markdown-mode pug-mode git-timemachine lispy rainbow-mode coffee-mode ace-window magit delight counsel solarized-theme ivy company aggressive-indent org-mode use-package)))
-
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -124,42 +96,6 @@
   (add-to-list 'aggressive-indent-excluded-modes 'geiser-repl-mode))
 
 (setq tramp-default-method "ssh")
-
-;; (use-package company
-;;   :ensure t
-;;   :config
-;;   (setq company-tooltip-align-annotations t)
-;;   :bind (:map
-;;          company-mode-map
-;;          ("<tab>" . company-indent-or-complete-common)
-;;          :map company-active-map
-;;          ("C-n" . 'company-select-next-or-abort)
-;;          ("C-p" . 'company-select-previous-or-abort))
-;;   :hook ((emacs-lisp-mode typescript-mode) . company-mode))
-
-;; (use-package counsel
-;;   :ensure t
-;;   :bind
-;;   (("M-x".  counsel-M-x)
-;;    ("C-x C-f" . counsel-find-file)
-;;    ("<f1> f" . counsel-describe-function)
-;;    ("<f1> v" . counsel-describe-variable)
-;;    ("<f1> l" . counsel-find-library)
-;;    ("<f2> i" . counsel-info-lookup-symbol)
-;;    ("<f2> u" . counsel-unicode-char)))
-
-;; (use-package ivy
-;;   :ensure t
-;;   :config
-;;   (ivy-mode 1)
-;;   (setq ivy-use-virtual-buffers t)
-;;   (setq ivy-count-format "(%d/%d) ")
-;;   :bind (("C-s" . swiper)
-;;          :map ivy-minibuffer-map
-;;          ("C-m"   . ivy-alt-done)               ; RET
-;;          ("C-j"   . ivy-done)
-;;          ("C-M-m" . ivy-immediate-done)
-;;          ("C-M-j" . ivy-call)))
 
 (use-package smart-mode-line
   :ensure t
@@ -228,12 +164,6 @@
   ;; (setq eglot-ignored-server-capabilities '(:hoverProvider))
   )
 
-;; (use-package flycheck
-;;   :ensure t
-;;   :init
-;;   (setq flycheck-check-syntax-automatically '(save mode-enabled))
-;;   :hook ((typescript-mode) . flycheck-mode))
-
 (use-package eldoc
   :hook ((typescript-mode) . eldoc-mode))
 
@@ -259,121 +189,14 @@
   (define-key projectile-command-map (kbd "s") #'projectile-ag)
   (projectile-mode +1))
 
-;; (use-package projectile
-;;   :ensure t
-;;   :after (ag)
-;;   :init
-;;   (projectile-mode +1)
-;;   :bind (:map
-;;          projectile-mode-map
-;;          ("s-p" . projectile-command-map)
-;;          ("C-c p" . projectile-command-map)))
-
-;; (use-package counsel-projectile
-;;   :ensure t
-;;   :after (projectile)
-;;   :config
-;;   (progn
-;;     (assoc-delete-all "s" counsel-projectile-key-bindings)
-;;     ;; (lambda (s1 s2)
-;;     ;;   (if (stringp s1)
-;;     ;;       (equal (substring s1 0 1)
-;;     ;;              (substring s2 0 1))
-;;     ;;     nil))
-;;     (add-to-list 'counsel-projectile-key-bindings '("s" . counsel-projectile-ag) t)
-;;     (counsel-projectile-mode)))
-
-;; (setq load-path (append (list "~/.emacs.d/6.945-config") load-path))
-;; (require 'mit-scheme-doc)
 
 (use-package geiser
-  :ensure t
-  ;; :bind (:map geiser-mode-map ("C-c C-d C-d" . 'mit-scheme-doc-lookup))
-  )
+  :ensure t)
 
 (use-package geiser-chez
   :ensure t
   :config
   (setq geiser-chez-binary "chez"))
-
-;; (use-package rustic
-;;   :ensure t
-;;   :bind (:map rustic-mode-map
-;;               ("M-j" . lsp-ui-imenu)
-;;               ("M-?" . lsp-find-references)
-;;               ("C-c C-c l" . flycheck-list-errors)
-;;               ("C-c C-c a" . lsp-execute-code-action)
-;;               ("C-c C-c r" . lsp-rename)
-;;               ("C-c C-c q" . lsp-workspace-restart)
-;;               ("C-c C-c Q" . lsp-workspace-shutdown)
-;;               ("C-c C-c s" . lsp-rust-analyzer-status))
-;;   :config
-;;   ;; uncomment for less flashiness
-;;   ;; (setq lsp-eldoc-hook nil)
-;;   ;; (setq lsp-enable-symbol-highlighting nil)
-;;   ;; (setq lsp-signature-auto-activate nil)
-
-;;   ;; comment to disable rustfmt on save
-;;   (setq rustic-format-on-save t)
-;;   :hook
-;;   (rustic-mode . (lambda ()
-;;                    (setq tab-width 4)
-;;                    (setq indent-tabs-mode t))))
-
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :commands lsp
-;;   :custom
-;;   ;; what to use when checking on-save. "check" is default, I prefer clippy
-;;   (lsp-rust-analyzer-cargo-watch-command "clippy")
-;;   (lsp-eldoc-render-all t)
-;;   (lsp-idle-delay 0.6)
-;;   (lsp-rust-analyzer-server-display-inlay-hints t)
-;;   ;; (lsp-rust-analyzer-display-lifetime-elision-hints-enable "skip_trivial")
-;;   ;; (lsp-rust-analyzer-display-chaining-hints t)
-;;   ;; (lsp-rust-analyzer-display-lifetime-elision-hints-use-parameter-names nil)
-;;   ;; (lsp-rust-analyzer-display-closure-return-type-hints t)
-;;   ;; (lsp-rust-analyzer-display-parameter-hints nil)
-;;   ;; (lsp-rust-analyzer-display-reborrow-hints nil)
-;;   :config
-;;   (add-hook 'lsp-mode-hook 'lsp-ui-mode))
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :commands lsp-ui-mode
-;;   :custom
-;;   (lsp-ui-peek-always-show t)
-;;   (lsp-ui-sideline-show-hover t)
-;;   (lsp-ui-doc-enable nil))
-
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :init
-;;   ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :hook (;; replace XXX-mode with concrete major-mode(e. g. python-mode)
-;;          lsp-rust-server to 'rust-analyzer
-;;          ;; (XXX-mode . lsp)
-;;          ;; if you want which-key integration
-;;          ;; (lsp-mode . lsp-enable-which-key-integration)
-;;          )
-;;   :commands lsp)
-
-;; ;; optionally
-;; (use-package lsp-ui :commands lsp-ui-mode)
-;; if you are ivy user
-;; (use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
-;; (use-package lsp-treemacs :commands lsp-treemacs-errors-list)
-
-;; optionally if you want to use debugger
-;; (use-package dap-mode)
-;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-
-;; optional if you want which-key integration
-;; (use-package which-key
-;;   :config
-;;   (which-key-mode))
-
 
 (use-package org
   :mode ("\\.org" . org-mode)
@@ -381,7 +204,6 @@
   :custom
   (org-startup-indented t)
   (org-startup-folded 'no-fold))
-
 
 (use-package vertico
   :ensure t
