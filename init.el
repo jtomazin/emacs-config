@@ -10,10 +10,10 @@
      "c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223"
      default))
  '(package-selected-packages
-   '(ag aggressive-indent company consult corfu counsel-projectile
-        delight geiser geiser-chez git-timemachine lispy lsp-ui magit
-        marginalia orderless rainbow-mode rustic smart-mode-line
-        solarized-theme vertico yascroll)))
+   '(ag aggressive-indent cider clojure-mode company consult corfu
+        counsel-projectile delight geiser geiser-chez git-timemachine
+        lispy lsp-ui magit marginalia orderless rainbow-mode rustic
+        smart-mode-line solarized-theme vertico yascroll)))
 
 (setq mac-command-modifier 'meta)
 
@@ -175,8 +175,6 @@
 
 (use-package magit
   :ensure t
-  :init
-  (setq magit-completing-read-function 'ivy-completing-read)
   :bind (("C-x g" . 'magit-status)
          ("C-c g" . 'magit-file-dispatch)))
 
@@ -196,8 +194,7 @@
 
 (use-package lispy
   :ensure t
-  ;; :after ace-window                     ; M-o conflicts
-  :hook ((emacs-lisp-mode geiser-mode) . lispy-mode)
+  :hook ((emacs-lisp-mode geiser-mode clojure-mode) . lispy-mode)
   :config
   (defun conditionally-enable-lispy ()
     (when (eq this-command 'eval-expression)
@@ -207,6 +204,29 @@
   (:map lispy-mode-map
         (":" . self-insert-command)
         ("M-o" . ace-window)))
+
+(use-package clojure-mode
+  :ensure t)
+
+(use-package cider
+  :ensure t
+  :after clojure-mode
+  :custom
+  (cider-repl-display-help-banner nil)
+  (cider-repl-pop-to-buffer-on-connect 'display-only)
+  (cider-save-file-on-load t)
+  (nrepl-hide-special-buffers t))
+
+(use-package eglot
+  :hook (clojure-mode . eglot-ensure)
+  :bind (:map eglot-mode-map
+              ("C-c l r" . eglot-rename)
+              ("C-c l a" . eglot-code-actions)
+              ("C-c l f" . eglot-format-buffer))
+  ;; Uncomment if docs from both CIDER and eglot in the echo area get noisy:
+  ;; :config
+  ;; (setq eglot-ignored-server-capabilities '(:hoverProvider))
+  )
 
 ;; (use-package flycheck
 ;;   :ensure t
@@ -389,7 +409,8 @@
   ;; (orderless-component-separator #'orderless-escapable-split-on-space)
 
   (completion-styles '(orderless basic))
-  (completion-category-overrides '((file (styles basic partial-completion))))
+  (completion-category-overrides '((file (styles basic partial-completion))
+                                   (cider (styles basic))))
   (completion-category-defaults nil) ;; Disable defaults, use our settings
   (completion-pcm-leading-wildcard t)) ;; Emacs 31: partial-completion behaves like substring
 
